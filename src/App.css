@@ -1,6 +1,8 @@
-#root {
+:root {
   margin: 0 0;
   padding: 0;
+  --blue: rgba(38, 131, 239, 1);
+  --blue-shade: rgba(38, 131, 239, 0.2);
 }
 
 main {
@@ -17,11 +19,15 @@ main {
 .layer-switcher {
   padding: 16px 32px;
   background: #fff;
-  color: rgba(38, 131, 239, 1);
-  background: rgba(38, 131, 239, 0.2);
-  outline: 2px rgba(38, 131, 239, 1) solid;
+  color: var(--blue);
+  background: var(--blue-shade);
+  outline: 2px var(--blue) solid;
+  cursor: pointer;
 }
 
+.menu-item {
+  cursor: pointer;
+}
 .menu-item.active {
-  color: rgba(38, 131, 239, 1);
+  color: var(--blue);
 }
