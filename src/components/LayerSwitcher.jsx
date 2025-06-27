@@ -307,7 +307,7 @@ export default () => {
             "AerialWithLabelsOnDemand",
             "CanvasDark",
             //'OrdnanceSurvey'
-        ];
+        ]
         if (user.bingKey && mapBaseLayers["RoadOnDemand"] === undefined) {
             const groupKey = createLayerGroup("BingLayers", t`Bing layers`);
 
@@ -394,7 +394,7 @@ export default () => {
     const LayerMenuElement = ({ layerKey }) => {
         return (
             <div
-                className={`layer-item ${baseLayer === layerKey ? "active" : ""}`}
+                className={`menu-item ${baseLayer === layerKey ? "active" : ""}`}
                 key={layerKey}
                 onClick={() => dispatch(setBaseLayer(layerKey))}
                 title={translations[layerKey]}
@@ -459,8 +459,6 @@ export default () => {
             ))}
         </div>
     );
-
-    console.log(layerGroups, BaseLayersContent());
 
     return (
         <Popover content={<BaseLayersContent />} placement="right">
