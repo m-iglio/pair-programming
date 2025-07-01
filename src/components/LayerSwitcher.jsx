@@ -19,13 +19,19 @@ import TileState from "ol/TileState";
 import { get as getProjection } from "ol/proj";
 import { getTopLeft, getWidth } from "ol/extent";
 
-let mapBaseLayers = {};
-let layerGroups = {};
-let translations = {};
+// This 3 global variable:
+// - shouldn't be global
+// - could be merge in one recursive object
+let mapBaseLayers = {}; // is just a index of all the layer
+let layerGroups = {}; // represent the tree structure of the layer
+let translations = {}; // just hold the "label" of the layer
 
 const customLayersGroupKey = "customLayersGroup";
 const noLayerGroupKey = "noLayerGroup";
 
+/**
+ * Next three function only make up for the vague datastructure use
+ */
 const createLayer = (key, olDefinition, translation, layerGroupKey) => {
     translations[key] = translation;
     mapBaseLayers[key] = olDefinition;
@@ -47,7 +53,13 @@ const createLayerGroup = (key, translation) => {
     layerGroups[key] = {};
     return key;
 };
+/**
+ * End
+ */
 
+/**
+ * Next three function are OpenLayer focused, probably can be refactor but shouldn't be a priority
+ */
 const initWMSLayer = (customLayer, getMapRequestUrl) => {
     //handle projection system
     let srs = null;
@@ -173,6 +185,9 @@ const initXYZLayer = (customLayer, getMapRequestUrl) => {
     });
     return layer;
 };
+/**
+ * End
+ */
 
 export default () => {
     const { user, baseLayer } = useSelector(
@@ -188,6 +203,9 @@ export default () => {
     //create the default layer group
     //createLayerGroup(customLayersGroupKey, null);
 
+    /**
+     * This effect fill the three layer global variable
+     */
     useEffect(() => {
         let forceLoadFirstCustomLayer = false;
         //custom layers per customer
@@ -299,6 +317,11 @@ export default () => {
             );
         }
 
+        /**
+         * `bingStyles` and `bingTranslations` are constant, not depending on React lifecycle
+         * These two arrays are index-linked and must stay in sync: bingStyles[i] maps to bingTranslations[i]
+         * Consider merging into a single structure
+         */
         //we add bing layers only if the key is present
         //const user = undefined;
         const bingStyles = [
@@ -307,7 +330,7 @@ export default () => {
             "AerialWithLabelsOnDemand",
             "CanvasDark",
             //'OrdnanceSurvey'
-        ]
+        ];
         if (user.bingKey && mapBaseLayers["RoadOnDemand"] === undefined) {
             const groupKey = createLayerGroup("BingLayers", t`Bing layers`);
 
