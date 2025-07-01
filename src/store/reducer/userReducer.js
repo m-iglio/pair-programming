@@ -4,6 +4,8 @@ import { TileWMS } from "ol/source";
 const initialUser = {
     bingKey: "demo-api-key",
     showOSM: true,
+    osmLayerIndex: 2,
+    bingLayerIndex: 1,
     baseLayers: [
         {
             WMSLayer: {
