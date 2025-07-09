@@ -26,6 +26,27 @@ let mapBaseLayers = {}; // is just a index of all the layer
 let layerGroups = {}; // represent the tree structure of the layer
 let translations = {}; // just hold the "label" of the layer
 
+/**
+ * Use the following object data structure as a state (that unified the previous 3 object data structure as a global variable mess)
+ * Here is the type definition.
+ *
+ * @typedef {Object} LayerNode
+ * @property {string} id 
+ * @property {string} title
+ * @property {number} orderIndex 
+ * @property {any} olLayer 
+ * @property {false} [isGroup] 
+ *
+ * @typedef {Object} LayerGroup
+ * @property {string} id 
+ * @property {string} title
+ * @property {number} orderIndex
+ * @property {true} isGroup
+ * @property {LayerTree[]} children
+ *
+ * @typedef {LayerNode | LayerGroup} LayerTree
+ */
+
 const customLayersGroupKey = "customLayersGroup";
 const noLayerGroupKey = "noLayerGroup";
 
